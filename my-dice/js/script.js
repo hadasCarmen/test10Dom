@@ -44,40 +44,6 @@ const diceFaces = {
     { x: 75, y: 75 },
   ],
 };
-const diceFaces2 = {
-  1: [{ x: 50, y: 50 }],
-  2: [
-    { x: 25, y: 25 },
-    { x: 75, y: 75 },
-  ],
-  3: [
-    { x: 25, y: 25 },
-    { x: 50, y: 50 },
-    { x: 75, y: 75 },
-  ],
-  4: [
-    { x: 25, y: 25 },
-    { x: 75, y: 25 },
-    { x: 25, y: 75 },
-    { x: 75, y: 75 },
-  ],
-  5: [
-    { x: 25, y: 25 },
-    { x: 75, y: 25 },
-    { x: 50, y: 50 },
-    { x: 25, y: 75 },
-    { x: 75, y: 75 },
-  ],
-  6: [
-    { x: 25, y: 25 },
-    { x: 75, y: 25 },
-    { x: 25, y: 50 },
-    { x: 75, y: 50 },
-    { x: 25, y: 75 },
-    { x: 75, y: 75 },
-  ],
-};
-
 // Update display
 function updateDisplay() {
   document.getElementById("player1Total").textContent =
@@ -129,7 +95,7 @@ function drawDice2(number) {
 
   face.innerHTML = "";
 
-  const dots = diceFaces2[number];
+  const dots = diceFaces[number];
   dots.forEach((dot) => {
     const dotEl = document.createElement("span");
     dotEl.className = "dot";
