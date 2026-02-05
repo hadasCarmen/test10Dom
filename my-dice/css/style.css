@@ -164,7 +164,7 @@ body {
     margin-bottom: 30px;
 }
 
-.dice {
+.dice ,.dice2{
     width: 120px;
     height: 120px;
     perspective: 1000px;
@@ -188,8 +188,26 @@ body {
         transform: rotateX(540deg) rotateY(540deg);
     }
 }
+.dice.rolling2{
+    animation: diceRoll2 0.5s ease-in-out;
+}
 
-.dice-face {
+@keyframes diceRoll2 {
+    0%, 100% {
+        transform: rotateX(0) rotateY(0);
+    }
+    25% {
+        transform: rotateX(180deg) rotateY(180deg);
+    }
+    50% {
+        transform: rotateX(360deg) rotateY(360deg);
+    }
+    75% {
+        transform: rotateX(540deg) rotateY(540deg);
+    }
+}
+
+.dice-face , .dice-face2 {
     width: 100%;
     height: 100%;
     background: white;
@@ -199,7 +217,7 @@ body {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
-.dot {
+.dot ,.dot2{
     width: 20px;
     height: 20px;
     background: #2d3748;

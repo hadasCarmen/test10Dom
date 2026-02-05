@@ -19,6 +19,14 @@ const diceFaces = {
     5: [{ x: 25, y: 25 }, { x: 75, y: 25 }, { x: 50, y: 50 }, { x: 25, y: 75 }, { x: 75, y: 75 }],
     6: [{ x: 25, y: 25 }, { x: 75, y: 25 }, { x: 25, y: 50 }, { x: 75, y: 50 }, { x: 25, y: 75 }, { x: 75, y: 75 }]
 };
+const diceFaces2 = {
+    1: [{ x: 50, y: 50 }],
+    2: [{ x: 25, y: 25 }, { x: 75, y: 75 }],
+    3: [{ x: 25, y: 25 }, { x: 50, y: 50 }, { x: 75, y: 75 }],
+    4: [{ x: 25, y: 25 }, { x: 75, y: 25 }, { x: 25, y: 75 }, { x: 75, y: 75 }],
+    5: [{ x: 25, y: 25 }, { x: 75, y: 25 }, { x: 50, y: 50 }, { x: 25, y: 75 }, { x: 75, y: 75 }],
+    6: [{ x: 25, y: 25 }, { x: 75, y: 25 }, { x: 25, y: 50 }, { x: 75, y: 50 }, { x: 25, y: 75 }, { x: 75, y: 75 }]
+};
 
 // Update display
 function updateDisplay() {
@@ -60,6 +68,21 @@ function drawDice(number) {
         face.appendChild(dotEl);
     });
 }
+function drawDice2(number) {
+    const dice = document.getElementById('dice2');
+    const face = dice.querySelector('.dice-face2');
+    
+    face.innerHTML = '';
+    
+    const dots = diceFaces2[number];
+    dots.forEach(dot => {
+        const dotEl = document.createElement('span');
+        dotEl.className = 'dot';
+        dotEl.style.left = `${dot.x}%`;
+        dotEl.style.top = `${dot.y}%`;
+        face.appendChild(dotEl);
+    });
+}
 
 // Roll dice with animation
 async function rollDice() {
@@ -68,21 +91,30 @@ async function rollDice() {
     gameState.rolling = true;
     const dice = document.getElementById('dice');
     dice.classList.add('rolling');
+    const dice2 = document.getElementById('dice2');
+    dice2.classList.add('rolling');
     
     // Animate random numbers
     for (let i = 0; i < 10; i++) {
         drawDice(Math.floor(Math.random() * 6) + 1);
         await new Promise(resolve => setTimeout(resolve, 100));
     }
-    
     // Final roll
     const result = Math.floor(Math.random() * 6) + 1;
     drawDice(result);
-    
     dice.classList.remove('rolling');
+    for (let i = 0; i < 10; i++) {
+        drawDice2(Math.floor(Math.random() * 6) + 1);
+        await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    
+    const result2 = Math.floor(Math.random() * 6) + 1;
+    drawDice2(result2);
+    
+    dice2.classList.remove('rolling');
     gameState.rolling = false;
     
-    return result;
+    return {result,result2};
 }
 
 // Roll button
@@ -92,19 +124,23 @@ document.getElementById('rollBtn').addEventListener('click', async () => {
     document.getElementById('resultMessage').textContent = '';
     
     const roll = await rollDice();
+    const {result}=roll
+    const {result2}=roll
+    console.log(result,result2);
     
-    if (roll === 1) {
+    
+    if (result === result2) {
         // Lost turn
         gameState.players[gameState.currentPlayer].current = 0;
-        showMessage(`💥 הטלת 1! איבדת את כל ניקוד התור!`, 'error');
+        showMessage(`💥 הטלת פעמיים ${result}! איבדת את כל ניקוד התור!`, 'error');
         
         await new Promise(resolve => setTimeout(resolve, 1500));
         switchPlayer();
     } else {
         // Add to current
-        gameState.players[gameState.currentPlayer].current += roll;
+        gameState.players[gameState.currentPlayer].current += result+result2;
         updateDisplay();
-        showMessage(`🎲 הטלת ${roll}!`, 'info');
+        showMessage(`🎲 הטלת ${result}  ו  ${result2}!`, 'info');
     }
 });
 
@@ -226,6 +262,7 @@ function newGame() {
     
     updateDisplay();
     drawDice(1);
+    drawDice(1);
     document.getElementById('resultMessage').textContent = '';
 }
 
@@ -289,3 +326,4 @@ function createConfetti() {
 // Initialize
 updateDisplay();
 drawDice(1);
+drawDice2(1);
