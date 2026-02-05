@@ -39,12 +39,7 @@ body {
     font-size: 1.1rem;
 }
 
-.game-mode {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 25px;
-}
+
 
 .mode-btn {
     padding: 12px 30px;
@@ -376,9 +371,7 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .game-mode {
-        flex-direction: column;
-    }
+    
 
     .mode-btn {
         width: 100%;
